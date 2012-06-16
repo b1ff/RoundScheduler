@@ -1,0 +1,27 @@
+﻿<Window x:Class="RoundScheduler.AddDefaultRounds"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AddDefaultRounds" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Количество раундов" Grid.Column="0" Grid.Row="0"></Label>
+        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Path=DefaultRoundRange}" SelectedValue="{Binding RoundsCount}"></ComboBox>
+        <Label Content="Время раунда" Grid.Column="0" Grid.Row="1"></Label>
+        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=DefaultTimeRange}"  SelectedValue="{Binding Path=DefaultRoundTime}"></ComboBox>
+        <Label Content="Время перерыва" Grid.Column="0" Grid.Row="2"></Label>
+        <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Path=DefaultTimeRange}" SelectedValue="{Binding Path=DefaultRestTime}"></ComboBox>
+
+        <Button Content="Применить" Command="{Binding Path=SetupRoundsCommand}" Grid.Row="4" Grid.Column="0" IsCancel="False" Click="DialogClose"></Button>
+        <Button Content="Оменить" Grid.Row="4" Grid.Column="1" IsCancel="True" Click="DialogClose"></Button>
+    </Grid>
+</Window>
