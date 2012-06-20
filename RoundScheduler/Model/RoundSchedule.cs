@@ -7,16 +7,19 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Windows;
 using System.Windows.Input;
+using System.Xml.Serialization;
+using RoundScheduler.Dto;
 using RoundScheduler.Events;
+using RoundScheduler.Services;
 using RoundScheduler.Utils;
 
 namespace RoundScheduler.Model
 {
     public class RoundSchedule : BasePropertyChanged
     {
-        private const string pauseButtonText = "Пауза";
-        private const string startButtonText = "Старт";
+        private readonly XmlSerializer _roundsSerializer = new XmlSerializer(typeof(List<RoundSerializable>));
 
         public RoundSchedule()
         {
@@ -28,8 +31,8 @@ namespace RoundScheduler.Model
             Timer.RoundEnded += TimerRoundEnded;
             CurrentRoundIndex = 1;
             RestEndSound = RoundEndSound = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Ring.wav");
-            PauseButtonText = pauseButtonText;
-            StartStopButtonText = startButtonText;
+            PauseButtonText = ProgramTexts.Pause;
+            StartStopButtonText = ProgramTexts.Start;
         }
 
         public RoundTimer Timer { get; private set; }
@@ -101,13 +104,42 @@ namespace RoundScheduler.Model
             Rounds.ForEach(x => OverralTime += x.GetOverallTime());
         }
 
+        private void SaveRounds()
+        {
+            if (Rounds.IsNullOrEmpty()) return;
+
+            var fileName = FileDialogService.FileNameFromSaveFileDialog();
+            if (fileName.IsNullOrEmpty()) return;
+            
+            using (var sw = new StreamWriter(fileName))
+            {
+                var roundsToSerialize = Rounds.Select(x => new RoundSerializable(x)).ToList();
+                _roundsSerializer.Serialize(sw, roundsToSerialize);
+            }
+        }
+
+        private void LoadRounds()
+        {
+            var fileName = FileDialogService.FileNameFromOpenFileDialog();
+            if (fileName.IsNullOrEmpty()) return;
+
+            try
+            {
+                using (var sr = new StreamReader(fileName))
+                {
+                    var deserializedRounds = (List<RoundSerializable>)_roundsSerializer.Deserialize(sr);
+                    Rounds.Clear();
+                    deserializedRounds.ForEach(x => Rounds.Add(x.GetRound()));
+                }
+            }
+            catch
+            {
+                MessageBox.Show(ProgramTexts.ErrorWhileSavingRoundsToFile);
+            }
+        }
+
         #region ViewModel_Properties 
         public ObservableCollection<Round> Rounds { get; private set; }
-
-        public bool CanStart
-        {
-            get { return Rounds.IsNotNullOrEmpty(); }
-        }
 
         private int _curentRoundIndex;
         public int CurrentRoundIndex
@@ -193,6 +225,34 @@ namespace RoundScheduler.Model
 
         #region Commands
 
+        private ICommand _saveRoundsCommand;
+        public ICommand SaveRoundsComand
+        {
+            get
+            {
+                if (_saveRoundsCommand == null)
+                {
+                    _saveRoundsCommand = new DelegateCommand(SaveRounds, () => Rounds.IsNotNullOrEmpty());
+                }
+
+                return _saveRoundsCommand;
+            }
+        }
+
+        private ICommand _loadRoundsCommand;
+        public ICommand LoadRoundsCommand
+        {
+            get
+            {
+                if (_loadRoundsCommand == null)
+                {
+                    _loadRoundsCommand = new DelegateCommand(LoadRounds);
+                }
+
+                return _loadRoundsCommand;
+            }
+        }
+
         private ICommand _startTimerCommand;
         public ICommand StartTimerCommand
         {
@@ -204,15 +264,15 @@ namespace RoundScheduler.Model
                     {
                         if (Timer.IsRunning)
                         {
-                            StartStopButtonText = startButtonText;
+                            StartStopButtonText = ProgramTexts.Start;
                             ResetTimer();
                         }
                         else
                         {
-                            StartStopButtonText = "Остановить";
+                            StartStopButtonText = ProgramTexts.Stop;
                             StartNextRound();
                         }
-                    });
+                    }, () => Rounds.IsNotNullOrEmpty());
                 }
 
                 return _startTimerCommand;
@@ -229,8 +289,9 @@ namespace RoundScheduler.Model
                     _pauseTimerCommand = new DelegateCommand(() =>
                     {
                         Timer.PauseTimer();
-                        PauseButtonText = Timer.IsPaused ? "Продолжить" : pauseButtonText;
-                    });
+                        PauseButtonText = Timer.IsPaused ? ProgramTexts.Continue : ProgramTexts.Pause;
+                    }, 
+                    () => Timer.IsRunning);
                 }
                 return _pauseTimerCommand;
             }

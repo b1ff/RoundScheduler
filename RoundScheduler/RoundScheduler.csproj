@@ -59,10 +59,17 @@
     <Compile Include="AddDefaultRounds.xaml.cs">
       <DependentUpon>AddDefaultRounds.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dto\RoundSerializable.cs" />
     <Compile Include="Model\BasePropertyChanged.cs" />
     <Compile Include="Events\RoundEndedEventHandler.cs" />
     <Compile Include="Model\RoundsInitializer.cs" />
     <Compile Include="Model\RoundTimer.cs" />
+    <Compile Include="ProgramTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProgramTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\FileDialogService.cs" />
     <Compile Include="Utils\DelegateCommand.cs" />
     <Compile Include="Utils\IndexConverter.cs" />
     <Page Include="AddDefaultRounds.xaml">
@@ -99,6 +106,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="ProgramTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProgramTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

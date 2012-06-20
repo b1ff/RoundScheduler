@@ -144,6 +144,7 @@ namespace RoundScheduler.Model
             if (CurrentRoundTime == _round.RoundTime)
             {
                 _isRest = true;
+                _round.IsRoundPassed = true;
                 if (RoundEnded != null)
                     RoundEnded(this, new RoundEndedEventArgs(_round));
                 return;
@@ -157,6 +158,7 @@ namespace RoundScheduler.Model
             if (CurrentRestTime == _round.RestTime)
             {
                 _isRest = false;
+                _round.IsRestPassed = true;
                 _timer.Stop();
                 ResetRoundTime();
                 if (RoundEnded != null)

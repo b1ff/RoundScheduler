@@ -2,8 +2,13 @@
 
 namespace RoundScheduler.Model
 {
+    [Serializable]
     public class Round : BasePropertyChanged
     {
+        public Round()
+        {
+        }
+
         public Round(TimeSpan roundTime, TimeSpan restTime)
         {
             _roundTime = roundTime;
@@ -35,6 +40,30 @@ namespace RoundScheduler.Model
                 
                 _restTime = value;
                 InvokePropertyChanged("RestTime");
+            }
+        }
+
+        private bool _isRoundPassed;
+        public bool IsRoundPassed
+        {
+            get { return _isRoundPassed; }
+            set
+            {
+                bool changed = value != _isRoundPassed;
+                _isRoundPassed = value;
+                if (changed) InvokePropertyChanged("IsRoundPassed");
+            }
+        }
+
+        private bool _isRestPassed;
+        public bool IsRestPassed
+        {
+            get { return _isRestPassed; }
+            set
+            {
+                bool changed = value != _isRestPassed;
+                _isRestPassed = value;
+                if (changed) InvokePropertyChanged("IsRestPassed");
             }
         }
 
