@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Utils="clr-namespace:RoundScheduler.Utils" xmlns:RoundScheduler="clr-namespace:RoundScheduler"
         Title="{Binding Source={x:Static RoundScheduler:ProgramTexts.MainWindowCaption}}" Height="350" Width="600" ResizeMode="NoResize"
-        Name="MainWindow1">
+        Name="MainWindow1" KeyUp="OnKeyUp">
 
   <Window.Resources>
         <Utils:IndexConverter x:Key="indexConverter" />

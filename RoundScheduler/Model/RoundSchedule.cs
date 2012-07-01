@@ -9,6 +9,7 @@ using System.Linq;
 using System.Media;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using System.Xml.Serialization;
 using RoundScheduler.Dto;
 using RoundScheduler.Events;
@@ -21,6 +22,8 @@ namespace RoundScheduler.Model
     {
         private readonly XmlSerializer _roundsSerializer = new XmlSerializer(typeof(List<RoundSerializable>));
 
+        private readonly SoundPlayer restSoundPlayer;
+
         public RoundSchedule()
         {
             Rounds = new ObservableCollection<Round>();
@@ -29,13 +32,31 @@ namespace RoundScheduler.Model
             Rounds.CollectionChanged += RoundsTimeCollectionChanged;
             Timer.RestEnded += TimerRestEnded;
             Timer.RoundEnded += TimerRoundEnded;
+            Timer.FiveSecondsBeforeRestEnd += TimerFiveSecondsBeforeRestEnd;
             CurrentRoundIndex = 1;
             RestEndSound = RoundEndSound = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Ring.wav");
             PauseButtonText = ProgramTexts.Pause;
             StartStopButtonText = ProgramTexts.Start;
+            RestGongTimer = new DispatcherTimer();
+            RestGongTimer.Tick += RestTimerTick;
+            RestGongTimer.Interval = TimeSpan.FromSeconds(1);
+            restSoundPlayer = new SoundPlayer(RestEndSound);
         }
-
+        
         public RoundTimer Timer { get; private set; }
+
+        private DispatcherTimer RestGongTimer { get; set; }
+
+        private void RestTimerTick(object sender, EventArgs eventArgs)
+        {
+            restSoundPlayer.Stop();
+            restSoundPlayer.Play(); 
+        }
+        
+        private void TimerFiveSecondsBeforeRestEnd(object sender, EventArgs e)
+        {
+            RestGongTimer.Start();
+        }
 
         private void TimerRoundEnded(object sender, RoundEndedEventArgs e)
         {
@@ -45,10 +66,9 @@ namespace RoundScheduler.Model
 
         private void TimerRestEnded(object sender, RoundEndedEventArgs e)
         {
+            RestGongTimer.Stop();
             ++CurrentRoundIndex;
             StartNextRound();
-            var soundPlayer = new SoundPlayer(RestEndSound);
-            soundPlayer.Play();
         }
 
         private void StartNextRound()
@@ -139,9 +159,11 @@ namespace RoundScheduler.Model
         }
 
         #region ViewModel_Properties 
+
         public ObservableCollection<Round> Rounds { get; private set; }
 
         private int _curentRoundIndex;
+
         public int CurrentRoundIndex
         {
             get { return _curentRoundIndex; }
@@ -221,6 +243,7 @@ namespace RoundScheduler.Model
         {
             get { return _defaultRange.Value; }
         }
+
         #endregion
 
         #region Commands

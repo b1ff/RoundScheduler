@@ -16,6 +16,7 @@ namespace RoundScheduler.Model
 
         public event RoundEndedEventHandler RoundEnded;
         public event RoundEndedEventHandler RestEnded;
+        public event EventHandler FiveSecondsBeforeRestEnd;
 
         public RoundTimer()
         {
@@ -155,6 +156,11 @@ namespace RoundScheduler.Model
 
         private void RestTimerTick()
         {
+            if ((CurrentRestTime == _round.RestTime - TimeSpan.FromSeconds(4)) && FiveSecondsBeforeRestEnd != null)
+            {
+                FiveSecondsBeforeRestEnd(this, EventArgs.Empty);
+            }
+
             if (CurrentRestTime == _round.RestTime)
             {
                 _isRest = false;

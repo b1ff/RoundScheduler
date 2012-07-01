@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
 using RoundScheduler.Model;
 using RoundScheduler.Services;
 
@@ -51,6 +52,14 @@ namespace RoundScheduler
 
             if (e.Column.Header.ToString() == ProgramTexts.RestTime && round.IsRestPassed)
                 e.Cancel = true;
+        }
+
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                _roundSchedule.PauseTimerCommand.Execute(null);
+            }
         }
     }
 }
