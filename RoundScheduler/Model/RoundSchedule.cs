@@ -73,9 +73,9 @@ namespace RoundScheduler.Model
 
         private void StartNextRound()
         {
-            if (Rounds == null || !Rounds.Any())
+            if (Rounds.IsNullOrEmpty())
                 return;
-            if (CurrentRoundIndex < Rounds.Count - 1)
+            if (CurrentRoundIndex <= Rounds.Count)
                 Timer.StartRound(Rounds[CurrentRoundIndex - 1]);
             else
                 CurrentRoundIndex = 1;
@@ -91,7 +91,6 @@ namespace RoundScheduler.Model
         {
             SignRoundToChanges(e.NewItems);
             SignRoundToChanges(e.OldItems);
-            InvokePropertyChanged("CanStart"); 
 
             switch (e.Action)
             {
