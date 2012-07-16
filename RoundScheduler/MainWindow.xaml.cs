@@ -1,9 +1,8 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using RoundScheduler.Model;
-using RoundScheduler.Services;
+using RoundScheduler.Utils;
 
 namespace RoundScheduler
 {
@@ -24,11 +23,18 @@ namespace RoundScheduler
             this.AddTimeRangeColumn(ProgramTexts.RestTime, "RestTime");
 
             this.InitializeRounds.Click += InitializeRoundsClick;
+            this.Settings.Click += ShowSettings;
         }
 
         private void InitializeRoundsClick(object sender, System.Windows.RoutedEventArgs e)
         {
             var dialog = new AddDefaultRounds((RoundSchedule)this.DataContext);
+            dialog.ShowDialog();
+        }
+
+        private void ShowSettings(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var dialog = new SettingsDialog();
             dialog.ShowDialog();
         }
 
@@ -38,6 +44,7 @@ namespace RoundScheduler
             comboBoxColumn.ItemsSource = _roundSchedule.DefaultRange;
             comboBoxColumn.SelectedValueBinding = new Binding(bindingPath);
             comboBoxColumn.Header = columnHeader;
+            comboBoxColumn.CanUserSort = false;
             
             this.RoundsGrid.Columns.Add(comboBoxColumn);
         }

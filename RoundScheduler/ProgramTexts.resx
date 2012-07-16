@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Apply" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
   <data name="Continue" xml:space="preserve">
     <value>Продолжить</value>
   </data>
@@ -127,13 +133,19 @@
     <value>Ошибка во время сохранения программы. Попробуйте сохранить еще раз.</value>
   </data>
   <data name="FileDialog_XmlFileFilter" xml:space="preserve">
-    <value>Файл с программой|*.brp</value>
+    <value>Файл с программой(brp)|*.brp</value>
+  </data>
+  <data name="FileDialog_SoundFileFilter" xml:space="preserve">
+    <value>Звуковой файл(wav)|*.wav</value>
   </data>
   <data name="LoadRounds" xml:space="preserve">
     <value>Загрузить программу</value>
   </data>
   <data name="MainWindowCaption" xml:space="preserve">
     <value>Таймер</value>
+  </data>
+  <data name="NeedToLoopSoundBeforeRestEnd" xml:space="preserve">
+    <value>Повтор звука в конце отдыха каждую секунду</value>
   </data>
   <data name="Pause" xml:space="preserve">
     <value>Пауза</value>
@@ -152,6 +164,12 @@
   </data>
   <data name="SetRoundsWindowCaption" xml:space="preserve">
     <value>Создать программу</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="SoundFile" xml:space="preserve">
+    <value>Звук</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Начать</value>

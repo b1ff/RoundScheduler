@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Utils="clr-namespace:RoundScheduler.Utils" xmlns:RoundScheduler="clr-namespace:RoundScheduler"
-        Title="{Binding Source={x:Static RoundScheduler:ProgramTexts.MainWindowCaption}}" Height="350" Width="600" ResizeMode="NoResize"
+        Title="{Binding Source={x:Static RoundScheduler:ProgramTexts.MainWindowCaption}}" Height="360" Width="600" ResizeMode="NoResize"
         Name="MainWindow1" KeyUp="OnKeyUp">
 
   <Window.Resources>
@@ -11,9 +11,6 @@
   </Window.Resources>
   <Grid>
         <Grid.Resources>
-            <!--<Style TargetType="{x:Type DataGrid}">
-                <Setter Property="Margin" Value="2" />
-            </Style>-->
             <Style TargetType="{x:Type Button}">
                 <Setter Property="Margin" Value="2" />
             </Style>
@@ -57,17 +54,22 @@
         </DockPanel>
 
         <DataGrid Name="RoundsGrid" Grid.Row="0" Grid.Column="1" BeginningEdit="BeginingEditGridCellValue"
-                  ItemsSource="{Binding Path=Rounds}" AutoGenerateColumns="False" CanUserAddRows="False">        
-            <DataGrid.Columns>                
-                <DataGridTextColumn IsReadOnly="True" Header="{Binding Source={x:Static RoundScheduler:ProgramTexts.RoundNumber}}" Binding="{Binding Converter={StaticResource indexConverter2}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                  ItemsSource="{Binding Path=Rounds}" AutoGenerateColumns="False" CanUserAddRows="False" Width="400">
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" CanUserSort="False" Header="{Binding Source={x:Static RoundScheduler:ProgramTexts.RoundNumber}}" Binding="{Binding Converter={StaticResource indexConverter2}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
                 <!--Another columns setup in .cs code-behind file-->
             </DataGrid.Columns>
-            
         </DataGrid>
-        <DockPanel Grid.Row="1" Grid.Column="1">
-            <Button Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.CreateRounds}}" Name="InitializeRounds" />
-            <Button Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.SaveRounds}}" Name="SaveRounds" Command="{Binding SaveRoundsComand}" />
-            <Button Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.LoadRounds}}" Name="LoadRound"  Command="{Binding LoadRoundsCommand}"/>
-        </DockPanel>
+      
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <DockPanel>
+                <Button Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.CreateRounds}}" Name="InitializeRounds" Width="145" />
+                <Button Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.SaveRounds}}" Name="SaveRounds" Command="{Binding SaveRoundsComand}" Width="145" />
+            </DockPanel>
+            <DockPanel>
+                <Button Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.LoadRounds}}" Name="LoadRound"  Command="{Binding LoadRoundsCommand}" Width="145" />
+                <Button Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.Settings}}" Name="Settings" Width="145" />
+            </DockPanel>
+        </StackPanel>
     </Grid>
 </Window>

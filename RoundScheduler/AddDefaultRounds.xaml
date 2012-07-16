@@ -35,7 +35,7 @@
         <Label Content="Время перерыва" Grid.Column="0" Grid.Row="2"></Label>
         <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Path=DefaultTimeRange}" SelectedValue="{Binding Path=DefaultRestTime}"></ComboBox>
 
-        <Button Content="Применить" Command="{Binding Path=SetupRoundsCommand}" Grid.Row="4" Grid.Column="0" IsCancel="False" Click="DialogClose"></Button>
-        <Button Content="Оменить" Grid.Row="4" Grid.Column="1" IsCancel="True" Click="DialogClose"></Button>
+        <Button Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.Apply}}" Command="{Binding Path=SetupRoundsCommand}" Grid.Row="4" Grid.Column="0" IsCancel="False" Click="DialogClose"></Button>
+        <Button Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.Cancel}}" Grid.Row="4" Grid.Column="1" IsCancel="True" Click="DialogClose"></Button>
     </Grid>
 </Window>

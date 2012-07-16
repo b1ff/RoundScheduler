@@ -61,6 +61,24 @@ namespace RoundScheduler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Применить.
+        /// </summary>
+        public static string Apply {
+            get {
+                return ResourceManager.GetString("Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Отменить.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Продолжить.
         /// </summary>
         public static string Continue {
@@ -88,7 +106,16 @@ namespace RoundScheduler {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Файл с программой|*.brp.
+        ///   Looks up a localized string similar to Звуковой файл(wav)|*.wav.
+        /// </summary>
+        public static string FileDialog_SoundFileFilter {
+            get {
+                return ResourceManager.GetString("FileDialog_SoundFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Файл с программой(brp)|*.brp.
         /// </summary>
         public static string FileDialog_XmlFileFilter {
             get {
@@ -111,6 +138,15 @@ namespace RoundScheduler {
         public static string MainWindowCaption {
             get {
                 return ResourceManager.GetString("MainWindowCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Повтор звука в конце отдыха каждую секунду.
+        /// </summary>
+        public static string NeedToLoopSoundBeforeRestEnd {
+            get {
+                return ResourceManager.GetString("NeedToLoopSoundBeforeRestEnd", resourceCulture);
             }
         }
         
@@ -165,6 +201,24 @@ namespace RoundScheduler {
         public static string SetRoundsWindowCaption {
             get {
                 return ResourceManager.GetString("SetRoundsWindowCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Настройки.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Звук.
+        /// </summary>
+        public static string SoundFile {
+            get {
+                return ResourceManager.GetString("SoundFile", resourceCulture);
             }
         }
         

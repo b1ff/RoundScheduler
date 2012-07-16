@@ -34,7 +34,7 @@ namespace RoundScheduler.Model
             Timer.RoundEnded += TimerRoundEnded;
             Timer.FiveSecondsBeforeRestEnd += TimerFiveSecondsBeforeRestEnd;
             CurrentRoundIndex = 1;
-            RestEndSound = RoundEndSound = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Ring.wav");
+            RestEndSound = RoundEndSound = SettingsManager.CurrentSettings.SoundFile;
             PauseButtonText = ProgramTexts.Pause;
             StartStopButtonText = ProgramTexts.Start;
             RestGongTimer = new DispatcherTimer();
@@ -49,12 +49,16 @@ namespace RoundScheduler.Model
 
         private void RestTimerTick(object sender, EventArgs eventArgs)
         {
-            restSoundPlayer.Stop();
-            restSoundPlayer.Play(); 
+            if (SettingsManager.CurrentSettings.NeedToLoopRestSound)
+            {
+                restSoundPlayer.Stop();
+                restSoundPlayer.Play(); 
+            }
         }
         
         private void TimerFiveSecondsBeforeRestEnd(object sender, EventArgs e)
         {
+            restSoundPlayer.Play();
             RestGongTimer.Start();
         }
 
@@ -67,6 +71,11 @@ namespace RoundScheduler.Model
         private void TimerRestEnded(object sender, RoundEndedEventArgs e)
         {
             RestGongTimer.Stop();
+            if (!SettingsManager.CurrentSettings.NeedToLoopRestSound)
+            {
+                restSoundPlayer.Play();
+            }
+
             ++CurrentRoundIndex;
             StartNextRound();
         }
@@ -127,7 +136,7 @@ namespace RoundScheduler.Model
         {
             if (Rounds.IsNullOrEmpty()) return;
 
-            var fileName = FileDialogService.FileNameFromSaveFileDialog();
+            var fileName = FileDialogService.FileNameFromSaveFileDialog(ProgramTexts.FileDialog_XmlFileFilter);
             if (fileName.IsNullOrEmpty()) return;
             
             using (var sw = new StreamWriter(fileName))
@@ -139,7 +148,7 @@ namespace RoundScheduler.Model
 
         private void LoadRounds()
         {
-            var fileName = FileDialogService.FileNameFromOpenFileDialog();
+            var fileName = FileDialogService.FileNameFromOpenFileDialog(ProgramTexts.FileDialog_XmlFileFilter);
             if (fileName.IsNullOrEmpty()) return;
 
             try

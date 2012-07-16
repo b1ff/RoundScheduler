@@ -1,0 +1,39 @@
+﻿<Window x:Class="RoundScheduler.SettingsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:RoundScheduler="clr-namespace:RoundScheduler"
+        Title="{Binding Source={x:Static RoundScheduler:ProgramTexts.Settings}}" Height="130" Width="400">
+    <Grid>
+        <Grid.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="35"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        
+        <Label Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.SoundFile}}" Grid.Row="0" Grid.Column="0" />
+        <TextBox Text="{Binding SoundFile}" Grid.Row="0" Grid.Column="1" GotFocus="OnSoundFileFocus"/>
+
+        <TextBlock Text="{Binding Source={x:Static RoundScheduler:ProgramTexts.NeedToLoopSoundBeforeRestEnd}}" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap"></TextBlock>
+        <CheckBox IsChecked="{Binding NeedToLoopRestSound}" Grid.Row="1" Grid.Column="1"/>
+
+        <Button Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.Apply}}" Click="SaveSettingsButtonClick"  Grid.Row="2" Grid.Column="0" IsCancel="False"></Button>
+        <Button Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.Cancel}}" Grid.Row="2" Grid.Column="1" IsCancel="True"></Button>
+    </Grid>
+</Window>
