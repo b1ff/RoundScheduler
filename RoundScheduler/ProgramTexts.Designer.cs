@@ -214,6 +214,15 @@ namespace RoundScheduler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Табло.
+        /// </summary>
+        public static string ShowTable {
+            get {
+                return ResourceManager.GetString("ShowTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Звук.
         /// </summary>
         public static string SoundFile {
@@ -237,6 +246,15 @@ namespace RoundScheduler {
         public static string Stop {
             get {
                 return ResourceManager.GetString("Stop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Время.
+        /// </summary>
+        public static string Time {
+            get {
+                return ResourceManager.GetString("Time", resourceCulture);
             }
         }
     }

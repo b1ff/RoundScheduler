@@ -177,4 +177,10 @@
   <data name="Stop" xml:space="preserve">
     <value>Остановить</value>
   </data>
+  <data name="ShowTable" xml:space="preserve">
+    <value>Табло</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Время</value>
+  </data>
 </root>

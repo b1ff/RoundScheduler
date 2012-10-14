@@ -1,8 +1,8 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using RoundScheduler.Model;
-using RoundScheduler.Utils;
 
 namespace RoundScheduler
 {
@@ -24,15 +24,22 @@ namespace RoundScheduler
 
             this.InitializeRounds.Click += InitializeRoundsClick;
             this.Settings.Click += ShowSettings;
+			this.ShowTable.Click += ShowTableOnClick;
         }
 
-        private void InitializeRoundsClick(object sender, System.Windows.RoutedEventArgs e)
+	    private void ShowTableOnClick(object sender, RoutedEventArgs routedEventArgs)
+	    {
+		    var timeDock = new TimeDock(new TimeDockViewModel(_roundSchedule));
+		    timeDock.Show();
+	    }
+
+	    private void InitializeRoundsClick(object sender, RoutedEventArgs e)
         {
             var dialog = new AddDefaultRounds((RoundSchedule)this.DataContext);
             dialog.ShowDialog();
         }
 
-        private void ShowSettings(object sender, System.Windows.RoutedEventArgs e)
+        private void ShowSettings(object sender, RoutedEventArgs e)
         {
             var dialog = new SettingsDialog();
             dialog.ShowDialog();

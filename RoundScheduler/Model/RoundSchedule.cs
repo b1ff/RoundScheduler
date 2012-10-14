@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -22,7 +23,7 @@ namespace RoundScheduler.Model
     {
         private readonly XmlSerializer _roundsSerializer = new XmlSerializer(typeof(List<RoundSerializable>));
 
-        private readonly SoundPlayer restSoundPlayer;
+        private readonly SoundPlayer _restSoundPlayer;
 
         public RoundSchedule()
         {
@@ -40,7 +41,7 @@ namespace RoundScheduler.Model
             RestGongTimer = new DispatcherTimer();
             RestGongTimer.Tick += RestTimerTick;
             RestGongTimer.Interval = TimeSpan.FromSeconds(1);
-            restSoundPlayer = new SoundPlayer(RestEndSound);
+            _restSoundPlayer = new SoundPlayer(RestEndSound);
         }
         
         public RoundTimer Timer { get; private set; }
@@ -51,21 +52,24 @@ namespace RoundScheduler.Model
         {
             if (SettingsManager.CurrentSettings.NeedToLoopRestSound)
             {
-                restSoundPlayer.Stop();
-                restSoundPlayer.Play(); 
+                _restSoundPlayer.Stop();
+                _restSoundPlayer.Play(); 
             }
         }
         
         private void TimerFiveSecondsBeforeRestEnd(object sender, EventArgs e)
         {
-            restSoundPlayer.Play();
+            _restSoundPlayer.Play();
             RestGongTimer.Start();
         }
 
         private void TimerRoundEnded(object sender, RoundEndedEventArgs e)
         {
-            var soundPlayer = new SoundPlayer(RestEndSound);
-            soundPlayer.Play();
+			if (File.Exists(RestEndSound))
+			{
+				var soundPlayer = new SoundPlayer(RestEndSound);
+				soundPlayer.Play();
+			}
         }
 
         private void TimerRestEnded(object sender, RoundEndedEventArgs e)
@@ -73,7 +77,7 @@ namespace RoundScheduler.Model
             RestGongTimer.Stop();
             if (!SettingsManager.CurrentSettings.NeedToLoopRestSound)
             {
-                restSoundPlayer.Play();
+                _restSoundPlayer.Play();
             }
 
             ++CurrentRoundIndex;
@@ -242,7 +246,6 @@ namespace RoundScheduler.Model
                 if (changed) InvokePropertyChanged("OverralTime");
             }
         }
-
 
         private static readonly Lazy<IEnumerable<TimeSpan>> _defaultRange = new Lazy<IEnumerable<TimeSpan>>(
             () => Enumerable.Range(1, 20).Select(x => TimeSpan.FromSeconds(10 * x)));

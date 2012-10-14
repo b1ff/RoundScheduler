@@ -26,7 +26,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="210" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
@@ -35,17 +35,20 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="130"/>
                 <ColumnDefinition Width="65" />
             </Grid.ColumnDefinitions>
-            <Label Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.RoundNumber}}" Grid.Row="0" Grid.Column="0"/>
-            <Label Content="{Binding Path=CurrentRoundIndex}" Grid.Row="0" Grid.Column="1"/>
+			<Label Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.RoundNumber}}" Grid.Row="0" Grid.Column="0"/>
+			<Label Content="{Binding Path=CurrentRoundIndex}" Grid.Row="0" Grid.Column="1" Name="RoundIndex" />
             <Label Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.RoundTime}}" Grid.Row="1" Grid.Column="0"/>
             <Label Content="{Binding Path=Timer.RoundTimeLeft}" Grid.Row="1" Grid.Column="1" />
             <Label Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.RestTime}}" Grid.Row="2" Grid.Column="0"/>
             <Label Content="{Binding Path=Timer.RestTimeLeft}" Grid.Row="2" Grid.Column="1" />
+
+			<Button Content="{Binding Source={x:Static RoundScheduler:ProgramTexts.ShowTable}}" Grid.Row="3" Grid.Column="1" Name="ShowTable" />
         </Grid>
 
         <DockPanel Grid.Row="1" Grid.Column="0" >
